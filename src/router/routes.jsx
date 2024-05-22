@@ -1,12 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Home from "../pages/Home";
+import MainPage from "../pages/MainPage";
 import About from "../pages/About";
 import Error from "../pages/Error";
 import MainLayout from "../components/layout/MainLayout";
 import MyPage from "../pages/myPage/MyPage";
 import { Suspense } from "react";
-import MyPageLoading from "../components/loading/MyPageLoading";
+
+import { MyPageLoading, MainLoading } from "../components/loading";
+
+import { UserData } from "../api/apiCaller";
+
 
 const router = createBrowserRouter([
   {
@@ -16,7 +20,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+        <Suspense fallback={<MainLoading/>}>
+          <MainPage />
+        </Suspense>
+        ),
       },
       {
         path: "/about",
@@ -31,6 +39,7 @@ const router = createBrowserRouter([
       <MyPage />
     </Suspense>
     ),
+    loader: UserData,
     errorElement: <Error />,
   },
 ]);

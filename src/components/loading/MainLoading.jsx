@@ -2,7 +2,7 @@ import React from 'react'
 
 const MainLoading = () => {
   return (
-    <div>MainLoading....</div>
+    <div>MainLoading......................</div>
   )
 }
 

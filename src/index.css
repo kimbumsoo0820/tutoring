@@ -32,3 +32,8 @@ textarea {overflow:auto}
 details {display:block}
 summary {display:list-item}
 [hidden], template {display:none}
+
+
+body {
+    padding: 100px;
+}
