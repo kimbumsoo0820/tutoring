@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import MainPage from "../pages/MainPage";
 import About from "../pages/About";
-import Error from "../pages/Error";
+import Error from "../pages/error/Error";
 import MainLayout from "../components/layout/MainLayout";
 import MyPage from "../pages/myPage/MyPage";
 import { Suspense } from "react";
