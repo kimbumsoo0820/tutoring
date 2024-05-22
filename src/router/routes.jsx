@@ -5,6 +5,8 @@ import About from "../pages/About";
 import Error from "../pages/Error";
 import MainLayout from "../components/layout/MainLayout";
 import MyPage from "../pages/myPage/MyPage";
+import { Suspense } from "react";
+import MyPageLoading from "../components/loading/MyPageLoading";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/myPage",
-    element: <MyPage />,
+    element: (
+    <Suspense fallback={<MyPageLoading/>}>
+      <MyPage />
+    </Suspense>
+    ),
     errorElement: <Error />,
   },
 ]);
