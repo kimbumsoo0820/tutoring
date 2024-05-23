@@ -16,9 +16,10 @@ const MyPage = () => {
     const userName = e.target.name.value
     const userAge =  e.target.age.value
     const userAddress =  e.target.address.value
+    setUserList([...userList, { name: userName, age: userAge, address: userAddress }]) // 낙관적 업데이트
     const res = await apiCaller.setUserData({name:userName, age:userAge, address:userAddress})
-    if(res === true) {
-      setUserList([...userList, { name: userName, age: userAge, address: userAddress }])
+    if(res === false) {
+      setUserList((pre)=> pre.pop()) //낙관적 업데이트 오류 반영
     }
   }
 
