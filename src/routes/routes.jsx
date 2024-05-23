@@ -9,7 +9,7 @@ import { Suspense } from "react";
 
 import { MyPageLoading, MainLoading } from "../components/loading";
 
-import { UserData } from "../api/apiCaller";
+import apiCaller from "../api/apiCaller";
 
 
 const router = createBrowserRouter([
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       <MyPage />
     </Suspense>
     ),
-    loader: UserData,
+    loader: apiCaller.getUserData,
     errorElement: <Error />,
   },
 ]);

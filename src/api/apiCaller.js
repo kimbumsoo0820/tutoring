@@ -1,6 +1,6 @@
 import supabase from "./supabase/supabaseClient";
 
-const UserData = async () => {
+const getUserData = async () => {
   const { data, error } = await supabase.from("MY_PROJECT").select();
   if (error) {
     window.alert("에러 발생", error);
@@ -10,4 +10,19 @@ const UserData = async () => {
   }
 };
 
-export { UserData };
+const setUserData = async (params) => {
+  const { data, error } = await supabase.from("MY_PROJECT").insert(params);
+  if (error) {
+    window.alert("에러 발생", error);
+    return Boolean(false);
+  } else {
+    console.log("apiCall userData :", data);
+    return Boolean(true);
+  }
+};
+const apiCaller = {
+  getUserData,
+  setUserData,
+};
+
+export default apiCaller;
