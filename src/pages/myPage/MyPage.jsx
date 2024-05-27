@@ -3,11 +3,16 @@ import NormalInput from "../../components/inputs/NormalInput";
 import useInput from "../../hooks/input/useInput";
 import apiCaller from "../../api/apiCaller";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import userReducer from "../../redux/reducers/user.reducer";
+import { addUserAction } from "../../redux/reducers/user.reducer";
 
 
 const MyPage = () => {
-  const user = useLoaderData()
+  const dispatch = useDispatch();
+  const user = useLoaderData();
   const [userList, setUserList] = useState(user);
+  const userSelectorList = useSelector((state)=>state.user)
 
 
   
@@ -21,10 +26,10 @@ const MyPage = () => {
     const userName = e.target.name.value
     const userAge =  e.target.age.value
     const userAddress =  e.target.address.value
-    setUserList([...userList, { name: userName, age: userAge, address: userAddress }]) // 낙관적 업데이트
+    dispatch(addUserAction({ name: userName, age: userAge, address: userAddress })) // 낙관적 업데이트
     const res = await apiCaller.setUserData({name:userName, age:userAge, address:userAddress})
     if(res === false) {
-      setUserList((pre)=> pre.pop()) //낙관적 업데이트 오류 반영
+      dispatch(userReducer([...userSelectorList.pop()]))
     }
   }
 
@@ -37,7 +42,7 @@ const MyPage = () => {
         <NormalInput title="주소" name="address" value={addressInput.value} onChange={addressInput.handleChange}/>
         <button>수정하기</button>
       </form>
-      {userList.map(({name,age,address}) => {
+      {userSelectorList.map(({name,age,address}) => {
         return (
           <div key={name}>
             <h1>사용자 이름 : {name}</h1>
