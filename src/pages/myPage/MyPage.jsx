@@ -11,7 +11,7 @@ import { addUserAction, setUserData } from "../../redux/reducers/user.reducer";
 const MyPage = () => {
   const dispatch = useDispatch();
   const user = useLoaderData();
-  const userSelectorList = useSelector((state)=>state.user)
+  const userSelectorList = useSelector((state)=> state.user)
 
   useLayoutEffect(()=> {
     dispatch(setUserData(user))
@@ -29,6 +29,7 @@ const MyPage = () => {
     dispatch(addUserAction({ name: userName, age: userAge, address: userAddress })) // 낙관적 업데이트
     const res = await apiCaller.setUserData({name:userName, age:userAge, address:userAddress})
     if(res === false) {
+      window.alert('네트워크가 원활하지 않거나, DB설정을 확인하세요.')
       dispatch(userReducer([...userSelectorList.pop()]))
     }
   }
@@ -37,9 +38,9 @@ const MyPage = () => {
     <div>
       <div>MyPage</div>
       <form onSubmit={handleSubmit}>
-        <NormalInput title="이름" name="name" value={nameInput.value} onChange={nameInput.handleChange}/>
-        <NormalInput title="나이" name="age" value={ageInput.value} onChange={ageInput.handleChange}/>
-        <NormalInput title="주소" name="address" value={addressInput.value} onChange={addressInput.handleChange}/>
+        <NormalInput title="이름" name="name" value={nameInput.value} onChange={nameInput.handleChange} type="text"/>
+        <NormalInput title="나이" name="age" value={ageInput.value} onChange={ageInput.handleChange} type="number"/>
+        <NormalInput title="주소" name="address" value={addressInput.value} onChange={addressInput.handleChange} type="text"/>
         <button>수정하기</button>
       </form>
       {userSelectorList.map(({name,age,address}) => {
