@@ -9,9 +9,6 @@ const MyPage = () => {
   const user = useLoaderData()
   const [userList, setUserList] = useState(user);
 
-
-  
-  
   const nameInput = useInput('')
   const ageInput = useInput('')
   const addressInput = useInput('')
