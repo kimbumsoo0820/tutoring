@@ -2,20 +2,20 @@ import { useLoaderData } from "react-router-dom";
 import NormalInput from "../../components/inputs/NormalInput";
 import useInput from "../../hooks/input/useInput";
 import apiCaller from "../../api/apiCaller";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import userReducer from "../../redux/reducers/user.reducer";
-import { addUserAction } from "../../redux/reducers/user.reducer";
+import { addUserAction, setUserData } from "../../redux/reducers/user.reducer";
 
 
 const MyPage = () => {
   const dispatch = useDispatch();
   const user = useLoaderData();
-  const [userList, setUserList] = useState(user);
   const userSelectorList = useSelector((state)=>state.user)
 
-
-  
+  useLayoutEffect(()=> {
+    dispatch(setUserData(user))
+  },[])
   
   const nameInput = useInput('')
   const ageInput = useInput('')

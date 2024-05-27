@@ -16,7 +16,7 @@ const setUserData = async (params) => {
     window.alert("에러 발생", error);
     return Boolean(false);
   } else {
-    console.log("apiCall userData :", data);
+    console.log("apiCall success");
     return Boolean(true);
   }
 };
