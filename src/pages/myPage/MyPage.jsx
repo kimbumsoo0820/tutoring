@@ -2,12 +2,15 @@ import { useLoaderData } from "react-router-dom";
 import NormalInput from "../../components/inputs/NormalInput";
 import useInput from "../../hooks/input/useInput";
 import apiCaller from "../../api/apiCaller";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/user/UserContext";
 
 
 const MyPage = () => {
   const user = useLoaderData()
   const [userList, setUserList] = useState(user);
+  const contextData = useContext(UserContext)
+  {(() => contextData ? console.log(contextData) : console.log('no'))()}
 
   const nameInput = useInput('')
   const ageInput = useInput('')
