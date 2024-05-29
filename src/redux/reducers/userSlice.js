@@ -1,12 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserData } from "./userActions";
-const initialState = [
-  //   {
-  //     name: "홍길동",
-  //     age: 20,
-  //     address: "서울특별시",
-  //   },
-];
+import { fetchUserData } from "../actions/userAction";
+const initialState = {
+  user: [],
+  isLoading: false,
+  error: null,
+};
 
 const userSlice = createSlice({
   name: "users",
@@ -26,15 +24,19 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
-        state.loading = true;
+        console.log("pending");
+        state.isLoading = true;
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
-        state.loading = false;
-        state.initialState = action.payload;
+        state.isLoading = false;
+        console.log("fulfilled", action);
+        state.user = action.payload;
       })
       .addCase(fetchUserData.rejected, (state, action) => {
-        state.loading = false;
-        state.initialState = action.error.message;
+        console.log("rejected");
+
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });

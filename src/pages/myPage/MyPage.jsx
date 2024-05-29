@@ -10,7 +10,7 @@ import UserForm from "./UserForm";
 const MyPage = () => {
   const[isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch();
-  const userSelectorList = useSelector((state)=> state.user)
+  const userSelectorList = useSelector((state)=> state.user.user)
 
   useEffect(() => {
     const fetchData = async () => {
