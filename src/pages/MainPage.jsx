@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+import 'react-loading-skeleton/dist/skeleton.css'
 const Home = () => {
 
   return (

@@ -4,13 +4,11 @@ import MainPage from "../pages/MainPage";
 import About from "../pages/About";
 import Error from "../pages/Error";
 import MainLayout from "../components/layout/MainLayout";
-import MyPage from "../pages/myPage/MyPage";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 
 import { MyPageLoading, MainLoading } from "../components/loading";
 
-import apiCaller from "../api/apiCaller";
-
+const LazyMyPage = React.lazy(() => import('../pages/myPage/MyPage'))
 
 const router = createBrowserRouter([
   {
@@ -36,7 +34,7 @@ const router = createBrowserRouter([
     path: "/myPage",
     element: (
     <Suspense fallback={<MyPageLoading/>}>
-      <MyPage />
+      <LazyMyPage />
     </Suspense>
     ),
     errorElement: <Error />,

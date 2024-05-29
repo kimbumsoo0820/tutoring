@@ -1,18 +1,29 @@
 import NormalInput from "../../components/inputs/NormalInput";
 import useInput from "../../hooks/input/useInput";
 import apiCaller from "../../api/apiCaller";
-import {  useLayoutEffect  } from "react";
+import {  useEffect, useState  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {fetchUserData, addNewUserData, rollBackUserData} from "../../redux/actions/userAction"
-
+import UserCardSkeleton from "./UserCardSkeleton";
+import UserForm from "./UserForm";
 
 const MyPage = () => {
+  const[isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch();
   const userSelectorList = useSelector((state)=> state.user)
 
-  useLayoutEffect(()=> {
-    dispatch(fetchUserData())
-  },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        await dispatch(fetchUserData());
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, [dispatch]);
   
   const nameInput = useInput('')
   const ageInput = useInput('')
@@ -25,6 +36,7 @@ const MyPage = () => {
     const userAddress =  e.target.address.value
     //낙관적 업데이트 구현
     dispatch(addNewUserData({name:userName, age:userAge, address:userAddress}))
+    
     try{
       await apiCaller.setUserData({name:userName, age:userAge, address:userAddress})
     } catch (error) {
@@ -32,6 +44,8 @@ const MyPage = () => {
       dispatch(rollBackUserData())
     }
   }
+
+  
 
   return (
     <div>
@@ -43,17 +57,35 @@ const MyPage = () => {
         <button>추가</button>
       </form>
       <button onClick={() => dispatch(rollBackUserData())}>Rollback State Test</button>
-      {userSelectorList.map(({name,age,address}) => {
-        return (
-          <div key={name}>
-            <h1>사용자 이름 : {name}</h1>
-            <h2>사용자 나이 : {age}</h2>
-            <h3>사용자 주소 : {address}</h3>
+      <div style={{marginTop:"15px"}}>
+        {isLoading ? (
+          <div>
+            <UserCard >
+              <UserCardSkeleton/>
+            </UserCard>
+            <UserCard >
+              <UserCardSkeleton/>
+            </UserCard>
+          
           </div>
-        )
-      })}
+        ) : (
+          userSelectorList.map(({name, age, address}) => (
+            <UserCard key={name} style={{border:"1px solid"}}>
+              <h1>사용자 이름 : {name}</h1>
+              <h2>사용자 나이 : {age}</h2>
+              <h3>사용자 주소 : {address}</h3>
+            </UserCard>
+          ))
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
 export default MyPage
+
+const UserCard = ({ children }) => (
+  <div style={{ border: "1px solid", padding: "10px", marginBottom: "10px", height:"170px" }}>
+    {children}
+  </div>
+);
