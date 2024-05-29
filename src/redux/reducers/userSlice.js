@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { fetchUserData } from "./userActions";
 const initialState = [
   //   {
   //     name: "홍길동",
@@ -22,6 +22,20 @@ const userSlice = createSlice({
       console.log(state);
       state.pop();
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUserData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.initialState = action.payload;
+      })
+      .addCase(fetchUserData.rejected, (state, action) => {
+        state.loading = false;
+        state.initialState = action.error.message;
+      });
   },
 });
 
