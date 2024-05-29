@@ -1,9 +1,9 @@
 
-const NormalInput = ({title ,name, value, onChange}) => {
+const NormalInput = ({title ,name, value, onChange, type = "text"}) => {
   return (
     <label style={{marginRight:'10px'}}>
         {title}
-        <input type="text" name={name} value={value} onChange={onChange}  />
+        <input type={type} name={name} value={value} onChange={onChange}  />
     </label>
   )
 }

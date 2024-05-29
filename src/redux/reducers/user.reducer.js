@@ -1,7 +1,14 @@
 const ADD_USER = "ADD_USER";
+export const SET_USER_DATA = "SET_USER_DATA";
 
 export function addUserAction(userData) {
   return { type: ADD_USER, payload: userData };
+}
+export function setUserData(userData) {
+  return {
+    type: SET_USER_DATA,
+    payload: userData,
+  };
 }
 
 const initialState = [
@@ -13,10 +20,11 @@ const initialState = [
 ];
 
 function userReducer(prevState = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case ADD_USER:
       return [...prevState, action.payload];
+    case SET_USER_DATA:
+      return action.payload;
     default:
       return prevState;
   }
