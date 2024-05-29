@@ -39,7 +39,6 @@ const router = createBrowserRouter([
       <MyPage />
     </Suspense>
     ),
-    loader: apiCaller.getUserData,
     errorElement: <Error />,
   },
 ]);
